@@ -1,0 +1,3 @@
+project=exservice
+test=rspec
+template=erb

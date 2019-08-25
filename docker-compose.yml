@@ -1,0 +1,80 @@
+version: '3.7'
+services:
+  web:
+    container_name: exs_web
+    build: .
+    working_dir: /web
+    command: bundle exec hanami server --host 0.0.0.0 -p 3000
+    ports:
+      - 3000:3000
+    volumes:
+      - gems:/usr/local/bundle:cached
+      - .:/web
+    networks:
+      - back-end
+    depends_on:
+      - db
+      - rabbitmq
+    env_file: .env
+    stdin_open: true
+    tty: true
+
+  wsl:
+    image: elixir:1.9
+    container_name: exs_wsl
+    working_dir: /wsl
+    command: mix run --no-halt
+    environment:
+      - MIX_ENV=dev
+    ports:
+      - 4000:4000
+    volumes:
+      - ./services/wsl:/wsl
+      - mix_data:/root/.mix
+
+  db:
+    container_name: exs_db
+    image: postgres:11-alpine
+    volumes:
+      - db:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    networks:
+      - back-end
+    env_file: .env
+
+  rabbitmq:
+    container_name: exs_rabbitmq
+    image: rabbitmq:3.7.8-management-alpine
+    env_file: .env
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq:cached
+    ports:
+      - 5672:5672
+      - 15672:15672
+
+  rabbitmq_worker:
+    container_name: exs_rabbitmq_worker
+    image: exs_web:latest
+    working_dir: /web
+    command: bash -c "./bin/wait && bundle exec sneakers work --require config/sneakers_boot.rb"
+    env_file: .env
+    working_dir: /web
+    stdin_open: true
+    tty: true
+    volumes:
+      - .:/web:cached
+      - gems:/usr/local/bundle:cached
+    depends_on:
+      - rabbitmq
+    environment:
+      - WAIT_HOSTS=rabbitmq:5672
+
+volumes:
+  gems:
+  rabbitmq-data:
+  db:
+  mix_data:
+
+networks:
+  back-end:
