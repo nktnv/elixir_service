@@ -26,7 +26,8 @@ defmodule WebsocketsListener.MixProject do
       {:websockex, "~> 0.4.2"},
       {:plug_cowboy, "~> 2.0.1"},
       {:credo, "~> 1.0.3", except: :prod, runtime: false},
-      {:code_reloader, github: "pilu/code_reloader"}
+      {:code_reloader, github: "pilu/code_reloader"},
+      {:amqp, "~> 1.3"}
     ]
   end
 end

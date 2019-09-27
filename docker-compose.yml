@@ -28,6 +28,7 @@ services:
       - MIX_ENV=dev
     ports:
       - 4000:4000
+    env_file: .env
     volumes:
       - ./services/wsl:/wsl
       - mix_data:/root/.mix

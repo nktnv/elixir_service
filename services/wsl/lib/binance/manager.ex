@@ -1,7 +1,7 @@
 defmodule Binance.Manager do
   use Supervisor
 
-  alias Binance.PublicListener
+  alias Binance.{PublicListener}
 
   def start_link do
     IO.puts "starting binance supervisor.."

@@ -7,6 +7,7 @@ class BinanceTickers
 
   def work(msg)
     puts msg
+    Hanami.logger.info("ACKNOWLAGED #{QUEUE_NAME}")
     ack!
   end
 end

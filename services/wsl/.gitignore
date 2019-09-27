@@ -1,5 +1,6 @@
 /deps
 /_build
+/log
 
 # /cover
 # /doc
