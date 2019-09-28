@@ -5,7 +5,7 @@ Welcome!
 ## Setup
 
 ```
- docker-compose up -d
+ docker-compose build
 ```
 
 ```
