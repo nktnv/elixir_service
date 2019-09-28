@@ -1,7 +1,7 @@
-class BinanceTickers
+class CoincapPrices
   include Sneakers::Worker
 
-  QUEUE_NAME = 'exs.binance_pairs_tickers'
+  QUEUE_NAME = 'exs.coincap_prices'
 
   from_queue QUEUE_NAME
 

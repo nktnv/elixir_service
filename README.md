@@ -23,3 +23,20 @@ Welcome!
 ```
 % docker-compose restart wsl
 ```
+
+## Production running
+
+# build a release
+```
+% docker-compose run --rm wsl bash -c "MIX_ENV=prod mix release"
+```
+
+# stop dev docker compose
+```
+% docker-compose down
+```
+
+# run prod docker compose
+```
+% docker-compose -f docker-compose.prod.yml up
+```

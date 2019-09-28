@@ -6,12 +6,12 @@ defmodule WebsocketsListener.Application do
   use Application
 
   alias WebsocketsListener.Endpoint
-  alias WebsocketsListener.CoinbaseClient
 
   def start(_type, _args) do
     import Supervisor.Spec
     children = [
       Endpoint,
+      worker(Coincap.PricesListener, []),
       supervisor(Binance.Manager, [], name: Binance.Manager)
     ]
 
